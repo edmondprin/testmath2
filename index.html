@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <span id="number1"></span> + <span id="number2"></span> + <span id="number3"></span> = <input type="number" id="response1">
+        <br>
+        <button type="submit" id="but">Click to submit</button>
+    </div>
+    <script>
+        let text = "";
+        let num1 = document.getElementById("number1")
+        num1.textContent = Math.floor(Math.random() * (20 - 10) + 10);
+        let num2 = document.getElementById("number2")
+        num2.textContent = Math.floor(Math.random() * (10 - 5) + 5);
+        let num3 = document.getElementById("number3")
+        num3.textContent = Math.floor(Math.random() * 5) + 1;
+        let sum = parseInt(num1.textContent) + parseInt(num2.textContent) + parseInt(num3.textContent);
+        let yourResponse = document.getElementById("response1");
+        let but = document.querySelector("button");
+        but.addEventListener("click", say)
+        function say() {
+            let yourNumber = parseInt(yourResponse.value);
+            if (yourNumber == sum) {
+                text = `${yourNumber}, ${typeof yourNumber}, ${sum}, ${typeof sum}, Great!`;
+            } else {
+                text = `${yourNumber}, ${typeof yourNumber}, ${sum}, ${typeof sum}, Not quite!`
+            }
+            let para = document.createElement("p")
+            para.textContent = text;
+            document.body.appendChild(para);
+            console.log(yourResponse, typeof yourResponse);
+    }
+    </script>
+</body>
+</html>
+
+<!--
+num1, num2, and num3 are HTML elements. You already computed the sum of their values as sum, so... probably that in your if (yourNumber.value == (num1 + num2 + num3)) comparison instead =) 
+
+Your num1 through num3 are spans. So you set their value as .textContent (don't use .innerHTML unless you're setting actual HTML code), and you get the value back out with the same .textContent (but why would you: you already know what you're putting in, just save that to an actual number =). Input elements, on the other hand, have a .value property that you use, instead. And in both cases, HTML elements only know strings, so if you're setting values and then getting them back out, remember to turn those strings back into numbers.
+
+Also you probably want to read the number from the response element not at the point in time when you generate the question, but later after the user clicked the button. So move the line yourNumber = parseInt(yourResponse.value) into the say function.
+-->
